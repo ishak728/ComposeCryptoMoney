@@ -21,9 +21,9 @@ class CryptoDetailViewModel @Inject constructor(
 
 
 
-    var image by mutableStateOf("")
-    var isImageError by mutableStateOf(false)
-    var isImageLoading by mutableStateOf(false)
+    var image = mutableStateOf("")
+    var isImageError = mutableStateOf(false)
+    var isImageLoading = mutableStateOf(false)
 
     var latestPrice by mutableStateOf<List<com.ishak.myapplication.model.latestprice.Response>>(listOf())
     var isLatestPriceError by mutableStateOf(false)
@@ -32,12 +32,14 @@ class CryptoDetailViewModel @Inject constructor(
 
 
     fun loadImageData(id:String){
-        isImageLoading=true
+        isImageLoading.value=true
 
         viewModelScope.launch {
 
-            println("loadimagedata::::::>>>>>>")
+
             val result=repository.getImage(id)
+            println("CryptoDetailViewModel laoadimagedata:::>>>>"+result.data)
+            println("image icon::::----"+result.data?.response?.get(0)?.icon)
 
 
 
@@ -47,21 +49,22 @@ class CryptoDetailViewModel @Inject constructor(
                     val response= result.data?.response?.get(0)?.icon
                     //image="https://fcsapi.com/assets/images/slug/bitcoin.png"
                     if (response != null) {
-                        println("detailviewmodel ---->>>>")
-                        image=response
+                        println("succes ::detailviewmodel ---->>>>")
+                        image.value=response
+                        println("image))))))))))))))))))))))))"+image.value)
                     }
-                    isImageLoading=false
-                    isImageError=false
+                    isImageLoading.value=false
+                    isImageError.value=false
                 }
                 is Resource.Error->{
                     println("error")
-                    isImageError=true
-                    isImageLoading=false
+                    isImageError.value=true
+                    isImageLoading.value=false
                 }
                 is Resource.Loading->{
                     println("loading")
-                    isImageLoading=true
-                    isImageError=false
+                    isImageLoading.value=true
+                    isImageError.value=false
                 }
             }
 

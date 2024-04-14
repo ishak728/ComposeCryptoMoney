@@ -43,6 +43,8 @@ class CryptoRepository @Inject constructor(
     override suspend fun getImage(id: String): Resource<Image> {
         return try {
             val result=retrofitApi.getImage(id)
+            println("Crypto respositoryyy get image func::::"+retrofitApi.getImage(id))
+
             println("Crypto respositoryyy:::"+result.response[0].icon)
             Resource.Success(result)
         }catch (e:Exception){

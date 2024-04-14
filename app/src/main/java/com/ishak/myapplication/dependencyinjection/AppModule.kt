@@ -1,5 +1,6 @@
 package com.ishak.myapplication.dependencyinjection
 
+import com.google.gson.GsonBuilder
 import com.ishak.myapplication.repository.CryptoRepository
 import com.ishak.myapplication.repository.CryptoRepositoryInterface
 import com.ishak.myapplication.service.retrofit.RetrofitApi

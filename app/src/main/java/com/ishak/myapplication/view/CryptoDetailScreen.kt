@@ -33,16 +33,12 @@ fun CryptoDetailScreen(
 
 
 
-    viewModel.loadImageData("78")
+    LaunchedEffect(key1 = true) {
+        println("launchedEffect:::::::>>>>>>>>")
+        viewModel.loadImageData("78")
+       // viewModel.loadLatestPriceData()
+    }
 
-
-   // viewModel.loadLatestPriceData(id)
-
-
-
-
-
-   
 
 
 
@@ -52,6 +48,8 @@ fun CryptoDetailScreen(
 
         Text(text = "Detail Screen")
         CreateImage()
+
+
         //CreateLatestPrice()
     }
 
@@ -61,7 +59,8 @@ fun CryptoDetailScreen(
 @Composable
 fun CreateImage(viewModel: CryptoDetailViewModel= hiltViewModel()) {
 
-    var image = remember {
+   // var image by remember { mutableStateOf("") }
+    var image=remember {
         viewModel.image
     }
 
@@ -70,10 +69,28 @@ fun CreateImage(viewModel: CryptoDetailViewModel= hiltViewModel()) {
     }
     var isImageLoading=remember {
         viewModel.isImageLoading
-    }
-    println("image:::::"+image)
 
-    Image(painter = rememberImagePainter(data =image), contentDescription ="Crypto money image" ,
+    }
+
+
+    //note rememberi içindeki mutable değeri değişirse otomatikmen rememberin atandığı değer yani "image" bulunduğu her yerde güncellenecek.
+    //bu rememberin özelliğidir.rememberin asıl amacı değerleri akılında tutmaktır tabi değeri değişirse güncellenecektir.
+    //burada ki asıl nokta viewmodelda bulunan Mutable sınıfından çağrılan mutable(Mutable sınıfını return eder) fonksiyonunun remember
+    // bloğuunda saklanmasıdır.yani remember bloğunda referans bulunur.referans olduğu için o referansın işaret ettiği nokta değişirse
+    //o referansı işaret eden her yer değişir.güncellenir.
+    //remember ve launchefect çok önemlidri.launch effectile de yaptım çalışıyor.ikisini de çok güzel şekilde araştırmam gerek.
+
+   /* LaunchedEffect(viewModel.image) {
+        println("launnnnnn")
+        image=viewModel.image
+        println("imagelaunceffec (${image})")
+
+    }*/
+
+
+    println("image:::::(${image.value})")
+
+    Image(painter = rememberImagePainter(data =image.value), contentDescription ="Crypto money image" ,
         modifier = Modifier
             .padding(16.dp)
             .size(200.dp, 200.dp)
