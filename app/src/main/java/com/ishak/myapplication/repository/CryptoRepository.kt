@@ -49,7 +49,6 @@ class CryptoRepository @Inject constructor(
             Resource.Success(result)
         }catch (e:Exception){
             println("eeeeeeeeeeee"+e)
-            println("Eroooooooooooooooooor cryptorepository getiamge func")
             Resource.Error("Error! No Data")
 
         }

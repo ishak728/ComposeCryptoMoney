@@ -25,9 +25,9 @@ class CryptoDetailViewModel @Inject constructor(
     var isImageError = mutableStateOf(false)
     var isImageLoading = mutableStateOf(false)
 
-    var latestPrice by mutableStateOf<List<com.ishak.myapplication.model.latestprice.Response>>(listOf())
-    var isLatestPriceError by mutableStateOf(false)
-    var isLatestPriceLoading by mutableStateOf(false)
+    var latestPrice = mutableStateOf<List<com.ishak.myapplication.model.latestprice.Response>>(listOf())
+    var isLatestPriceError = mutableStateOf(false)
+    var isLatestPriceLoading = mutableStateOf(false)
 
 
 
@@ -36,12 +36,7 @@ class CryptoDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-
             val result=repository.getImage(id)
-            println("CryptoDetailViewModel laoadimagedata:::>>>>"+result.data)
-            println("image icon::::----"+result.data?.response?.get(0)?.icon)
-
-
 
             when(result){
                 is Resource.Success->{
@@ -49,9 +44,8 @@ class CryptoDetailViewModel @Inject constructor(
                     val response= result.data?.response?.get(0)?.icon
                     //image="https://fcsapi.com/assets/images/slug/bitcoin.png"
                     if (response != null) {
-                        println("succes ::detailviewmodel ---->>>>")
+
                         image.value=response
-                        println("image))))))))))))))))))))))))"+image.value)
                     }
                     isImageLoading.value=false
                     isImageError.value=false
@@ -73,7 +67,7 @@ class CryptoDetailViewModel @Inject constructor(
     }
 
     fun loadLatestPriceData(id: String){
-        isLatestPriceLoading=true
+        isLatestPriceLoading.value=true
 
         viewModelScope.launch {
             val result=repository.getLatestPrice(id)
@@ -81,18 +75,18 @@ class CryptoDetailViewModel @Inject constructor(
                 is Resource.Success->{
                     val response= result.data?.response
                     if (response != null) {
-                        latestPrice=response
+                        latestPrice.value=response
                     }
-                    isLatestPriceLoading=false
-                    isLatestPriceError=false
+                    isLatestPriceLoading.value=false
+                    isLatestPriceError.value=false
                 }
                 is Resource.Error->{
-                    isLatestPriceError=true
-                    isLatestPriceLoading=false
+                    isLatestPriceError.value=true
+                    isLatestPriceLoading.value=false
                 }
                 is Resource.Loading->{
-                    isLatestPriceLoading=true
-                    isLatestPriceError=false
+                    isLatestPriceLoading.value=true
+                    isLatestPriceError.value=false
                 }
             }
 
