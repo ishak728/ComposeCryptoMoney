@@ -16,7 +16,6 @@ class CryptoRepository @Inject constructor(
        return try {
           // val result=retrofitApi.getCryptoList()
 
-
            var qwelist= (1..20).toList().map {
                Response(it.toString(),it.toString(),"czxcxz",it.toString())
            }
